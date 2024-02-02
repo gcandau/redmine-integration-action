@@ -17,7 +17,23 @@ module.exports.parse_redmine_issues = async function (prdata, redmine_host) {
 }
 
 module.exports.build_message = async function (prdata, context) {
-  return "pull request [" + prdata.title + "](" + prdata.html_url + ") " + context.payload.action;
+  /* Construct the message on multiple lines with the following format:
+    * - pull request [title](url) action
+    * - Diff url: diff_url
+    * - Patch url: patch_url
+    * - PR from branch: prdata.head.ref
+    * - PR to branch: prdata.base.ref
+    * - PR author: prdata.user.login
+  */
+  const message = [
+    `pull request [${prdata.title}](${prdata.html_url}) ${context.payload.action}`,
+    `Diff url: ${prdata.diff_url}`,
+    `Patch url: ${prdata.patch_url}`,
+    `PR from branch: ${prdata.head.ref}`,
+    `PR to branch: ${prdata.base.ref}`,
+    `PR author: ${prdata.user.login}`
+  ];
+  return message.join('\n');
 }
 
 
