@@ -26,9 +26,9 @@ module.exports.build_message = async function (prdata, context) {
     * - PR author: prdata.user.login
   */
   const message = [
-    `pull request [${prdata.title}](${prdata.html_url}) ${context.payload.action}`,
+    `pull request [${prdata.title}](${prdata.html_url}) ${context.payload.action}\n`,
     `Diff url: ${prdata.diff_url}`,
-    `Patch url: ${prdata.patch_url}`,
+    `Patch url: ${prdata.patch_url}\n`,
     `PR from branch: ${prdata.head.ref}`,
     `PR to branch: ${prdata.base.ref}`,
     `PR author: ${prdata.user.login}`
@@ -42050,8 +42050,7 @@ async function run() {
 
     redmine_issue_numbers.forEach(id => {
       redmine.update_issue(id, redmine_issue, function(err, data) {
-        if (err) throw err;
-
+        //if (err) throw err;
         console.log("update issue: " + JSON.stringify(redmine_issue));
       });
     });
