@@ -26,7 +26,10 @@ module.exports.build_message = async function (prdata, context) {
     * - PR author: prdata.user.login
   */
   const message = [
-    `pull request [${prdata.title}](${prdata.html_url}) ${context.payload.action}\n`,
+    `*Repository: ${prdata.base.repo.full_name}*`,
+    `Pull request *${prdata.title}*`,
+    `Pull request status: *${context.payload.action}*\n`,
+    `Pull request URL: ${prdata.html_url}`,
     `Diff url: ${prdata.diff_url}`,
     `Patch url: ${prdata.patch_url}\n`,
     `PR from branch: ${prdata.head.ref}`,
